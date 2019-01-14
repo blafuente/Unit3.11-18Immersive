@@ -1,0 +1,29 @@
+{
+  "name": "mynpm",
+  "version": "1.0.0",
+  "description": "Creating package.json with npm init",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blafuente/Unit3.11-18Immersive.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "test",
+    "javascript",
+    "anything"
+  ],
+  "author": "Brian Lafuente",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blafuente/Unit3.11-18Immersive/issues"
+  },
+  "homepage": "https://github.com/blafuente/Unit3.11-18Immersive#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

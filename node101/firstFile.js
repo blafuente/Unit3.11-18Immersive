@@ -34,3 +34,13 @@ const freeMem = os.freemem();
 console.log(freeMem);
 const nI = os.networkInterfaces();
 console.log(nI)
+
+const type = os.type();
+console.log(type);
+
+const upt = os.uptime();
+console.log(upt)
+
+const tm = os.totalmem();
+console.log(tm);
+
