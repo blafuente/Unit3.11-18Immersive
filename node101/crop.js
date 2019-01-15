@@ -67,5 +67,71 @@ const anyoneHave = cropInfo.some((aPlant)=>{
     }
 });
 
-console.log(anyoneHave);
+// console.log(anyoneHave);
+// console.log(cropInfo);
 
+// every takes one arg: a callback
+// that call back will run on EVERY element in the array 
+// if ALL return ture, then every returns true
+// if ANY return false , then every returns fales 
+const everyOneHave = cropInfo.every((aPlant)=>{
+    // console.log(aPlant.crop)
+    if(aPlant.crop !== undefined){
+        return true;
+    }
+});
+// console.log(everyOneHave); 
+
+const inChina = cropInfo.find((aPlant)=>{
+    // console.log(aPlant.nativeTo);
+    if(aPlant.nativeTo.indexOf('China') > -1){
+        return true;
+    }else{
+        return false;
+    }
+})
+// console.log(inChina);
+
+cropInfo.forEach((aPlant)=>{
+    // Mutation Time!!
+    aPlant.rank = Math.floor(Math.random()*10);
+})
+
+Array.prototype.forEach = function(callback){
+    for(let i = 0; i < Array.length; i++){
+        callback(Array[i]);
+    }
+}
+
+
+// Array.prototype.map
+// map takes 1 arg:
+// a callback to run on every element
+const newArray = cropInfo.map((aPlant)=>{
+    aPlant.rank = Math.random();
+    return aPlant;
+});
+// console.log(newArray);
+
+const arr = [1,2,3,4,5];
+const sum = arr.reduce((n,aggregateTotal)=>{
+    return aggregateTotal += n;
+})
+// console.log(sum)
+
+// filter is exactly the same as map, EXCEPT... 
+// map pushes something on for every element 
+// filter only pushes something on for elements that return true
+const inNA = cropInfo.map((aPlant)=>{
+    return aPlant.nativeTo.indexOf("North America") > -1 
+});
+// console.log(inNA)
+
+const arr2 = [2,3,4,5,6,7,1,4];
+const sorted = arr2.sort();
+console.log(sorted);
+
+const sortedCrops = cropInfo.sort((a,b)=>{
+    return a.crop - b.crop
+})
+console.log(sortedCrops);
