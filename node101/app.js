@@ -11,6 +11,7 @@ const server = http.createServer((req, res)=>{
         res.writeHead(400,{'content-type':'text/html'})
         const homePageHTML = fs.readFileSync('homepage.html');
         res.end(homePageHTML);
+        
     }else if(req.url === '/main.js'){
         res.writeHead(200,{'content-type':'text/javascript'})
         const scriptFile = fs.readFileSync('main.js');
