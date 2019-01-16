@@ -1,0 +1,86 @@
+
+body{
+    background-image: url("./NBApics/court_panel.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 50%;
+    
+}
+.logo{
+    height: 455px;
+    width: 455px;
+}
+
+/* The card is the grandparent, and is the cube. it is a 3D place
+for children to play inside of */
+.card{
+    width: 480px;
+    height: 500px;
+    perspective: 2000px;
+    border: 2px solid cornflowerblue;
+}
+
+/* a child of parent, and is able to play in 3D of parent */
+.card-holder{
+    width: 480px;
+    transition: all 2s;
+    /* the childe of card-holder will have absolute position
+    so give this parent a position */
+    position: relative;
+    /* tell all child elements (card-back and card-front), they are in
+    3D land, when you transform, do you like a good 3D child */
+    transform-style: preserve-3d;
+    /* transform-origin: 20% 40%; */
+
+}
+
+.card-front, .card-back{
+    /* we gave card-holder a position of relative
+    so left 0 will be the left side of card-holder */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* if you can see the front... you can't see anything. */
+    backface-visibility: hidden;
+    /* transition: all 2s; */
+}
+
+.card-front{
+    transform: rotateY(180deg);
+}
+
+.flip{
+    transform: rotateY(180deg);
+}
+
+/* Make the parent div obvious: */
+#parent{
+    height: 200px;
+    width: 200px;
+    margin: 50px;
+    padding: 10px;
+    background-color: #4f5f6c;
+    perspective: 200px;
+}
+
+
+#parent div{
+    padding: 50px;
+    border: 1px solid #0912ee;
+}
+#threeD{
+    background-color: #0f0;
+    transform: rotateX(45deg);
+}
+
+#threeD2{
+    background-color: #f0f;
+    transform: rotateY(45deg);
+}
+
+#threeD3{
+    background-color:lightgray;
+    transform: rotateZ(45deg);
+}

@@ -1,0 +1,60 @@
+body{
+    /* background-color: grey; */
+    background-image: url("./NBApics/court_panel.jpg");
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: 100%;
+    /* top: 50%; */ 
+}
+h1{
+    color: orange;
+}
+img{
+	/* Keep the image inside of the parent no matter what */
+	max-width: 100%;
+}
+
+/* Card is teh garandparent and needs perspective. */
+/* This doesn't make card 3d, it makes it 3d for everyone else. */
+.card{
+	perspective: 800px;
+	border: 2px solid black;
+	height: 300px;
+}
+
+/* Card-holder is the child, it is the thing that will flip */
+/* I have 2 children, front and back, they do not flip... I do */
+.card-holder{
+	position: relative;
+	transform-style: preserve-3d; /* the grandchildren need to know they are 3d */	
+	transition: 1s all;
+    cursor: pointer;
+}
+
+.card-front, .card-back{
+	position: absolute;
+	top: 0;
+	left: 0;
+	backface-visibility: hidden;
+}
+
+.card-front{
+	transform: rotateY(180deg);
+}
+
+.card-back{
+	/* we are inside of css, go up one with ../ then down into images to get bw */
+	background: url('./NBApics/nba-logo.png') no-repeat 50% 50%;	
+	height: 300px;
+    width: 100%;
+    
+}
+
+.flip{
+	transform: rotateY(-180deg);
+}
+
+.matched{
+    transition-duration: 1s;
+    transform: rotateY(540deg);
+}

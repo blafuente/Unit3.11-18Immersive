@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Card Flip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="card-flip.css" />
+    
+</head>
+<body>
+    <h1>Card Flipping in CSS!!</h1>
+    <!-- card = 3D Cube -->
+    <div class="card">
+        <!-- is a thing to flip -->
+        <div class="card-holder">
+            <!-- is a picture face down inside of card-holder -->
+            <div class="card-front">
+                <img src="./NBApics/hawks.jpg"/> 
+            </div>
+            <!-- is a picture face up inside of a card-holder -->
+            <div class="card-back">
+                <img class="logo" src="./NBApics/nbalogo.png"/>
+            </div>
+        </div>
+    </div>
+    <!-- <label>Change Perspective</label>
+    <div id="parent">
+        <div id="threeD">
+            Hello, world. I am a 3D child.
+        </div>
+        <div id="threeD2">
+            Go Braves
+        </div>
+        <div id="threeD3">
+            Go Falcons
+        </div>
+    </div> -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('.card-holder').click(function(){
+            $(this).toggleClass('flip');
+        })
+    </script>
+</body>
+</html>
