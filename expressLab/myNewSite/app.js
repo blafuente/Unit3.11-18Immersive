@@ -9,6 +9,15 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// app.use takes 1 arg: callback (middleware!)
+app.use((req, res, next)=>{
+  // console.log("My middleware ran!")
+  console.log("Check to see if user in db")
+  // if so, set a variable up inside res
+  // let x = "loggedIn"
+  next();
+})
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
