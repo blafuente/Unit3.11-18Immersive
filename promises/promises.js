@@ -15,7 +15,7 @@ const nowPlayingUrl = `${apiBaseUrl}/movie/now_playing?api_key=${apiKey}`;
 //         get, from cast data, an individual actor 
 //             get, individual actor, highest grossing movie 
 
-let movieData = '';
+// let movieData = '';
 
 // a promise is a constructor/class. It's built into JavaScript.
 // make a new one iwth the "new" keyword
@@ -24,7 +24,7 @@ let movieData = '';
 // 1. resolve
 // 2. reject
 const moviePromise = new Promise((resolve,reject)=>{
-    request.get(nowPlayingUrl, (err, response,body)=>{
+    request.get(nowPlayingUrl,(err,response,body)=>{
         // when we call reject, the outside world
         // will know, our promise has failed.
         if(err){
@@ -41,14 +41,23 @@ const moviePromise = new Promise((resolve,reject)=>{
 // a promise has a then. The then will run whenever
 // resolve is called inside the promise
 moviePromise.then((dataGivenToResolve)=>{
-    console.log(dataGivenToResolve);
+    return new Promise((resolve,reject)=>{
+        const id = dataGivenToResolve.results[0].id
+        const castUrl = `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
+        console.log(castUrl);
+        request.get(castUrl, (err, response,body)=>{
+            const parsedBody = JSON.parse(body);
+            resolve(parsedBody);
+        });
+    })
+}).then((actorData)=>{
+    // console.log(actorData);
+    const actorid = actorData.cast[0].id;
+    const peopleUrl = `${apiBaseUrl}/person/${actorid}?api_key=${apiKey}`;
+    request.get(peopleUrl,(err, response,body)=>{
+        const parsedBody = JSON.parse(body);
+        console.log(parsedBody);
+    })
 })
 
-console.log(moviePromise);
-// const castUrl = `${apiBaseUrl}/${movieData.results[0].id}/credits?api_key=${apiKey}`
-
-// request.get(castUrl, (err, response,body)=>{
-
-//     // console.log(parsedBody);
-// })
 
