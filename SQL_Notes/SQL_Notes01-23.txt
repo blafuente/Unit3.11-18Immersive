@@ -1,0 +1,111 @@
+-- SELECT = I want some records/rows
+-- After the word SELECT comes what columns you want
+-- options: 
+-- * = every available columnm
+-- city = I want the city column only
+-- city, phone = I want the city and phone 
+-- After the column(s) comes the keyword FROM
+-- AFTER from comes the table you want to query
+-- employees
+-- customers
+-- Always end SQL statements with a ;
+SELECT * FROM employees;
+SELECT firstName, lastName FROM employees;
+-- If you want only certain rows, you can add a WHERE after the table name
+SELECT * FROM employees WHERE jobTitle = 'Sales Rep';
+SELECT firstName, lastName, extension FROM employees WHERE jobTitle = 'Sales Rep';
+-- We can ask for "distinct" results 
+SELECT DISTINCT(jobTitle) from employees;
+-- WHERE clauses can have multiple conditions. Use AND and OR
+-- -------USE ()-------
+SELECT * FROM orders WHERE status = 'Cancelled' OR status = 'Resolved';
+SELECT * FROM orders WHERE orderDate < '2004-01-01' AND orderDate > '2003-01-01';
+-- LIKE is basically an =
+SELECT * FROM productLines WHERE productLine LIKE 'planes';
+-- The big advantage of LIKE, is you can use % (or wildcards) inside of your string
+SELECT * FROM employees WHERE lastName LIKE '%ur%';
+-- we want last names with 'ur' in them, and firstnames that start with D
+SELECT * FROM employees WHERE firstName LIKE 'D%' AND lastName LIKE '%ur%';
+-- we want last names with 'ur' in them, and firstnames that have a d anywhere
+SELECT * FROM employees WHERE firstName LIKE '%d%' AND lastName LIKE '%ur%';
+
+
+-- After the WHERE clause, you can add ORDER BY
+-- ORDER BY expects a column, and a direction(asc, desc)
+SELECT * FROM offices ORDER BY city asc;
+-- AFTER EVERYTHING, you can choose to limit the # of rows returned
+-- limit takes two args, where to start and how many
+-- if you only provide 1, it will start a 0
+-- Get the top 5 orders
+SELECT * FROM orderdetails ORDER BY  priceEach desc limit 0,5;
+SELECT * FROM orderdetails ORDER BY  priceEach desc limit 5;
+
+-- You can create a 'new' temp column in your SELECT
+-- say we wanted an 'order total' column, we can make it
+SELECT *, quantityOrdered * priceEach FROM orderDetails;
+-- in order to alias, change the name of anything in the result, use AS keyword
+SELECT *, quantityOrdered * priceEach AS orderTotal FROM orderDetails;
+-- order them from most expensive down
+SELECT *, quantityOrdered * priceEach AS orderTotal FROM orderDetails ORDER BY orderTotal desc;
+
+
+-- Get all employees with officeCode 1,2,3
+SELECT * FROM employees WHERE officeCode = 1 OR officeCode = 2 OR officeCode = 3;
+SELECT * FROM employees WHERE officeCode IN (1,2,3);
+
+-- Math Functions from Excel, are available as well
+SELECT *, quantityOrdered * priceEach AS orderTotal FROM orderDetails ORDER BY orderTotal desc;
+SELECT SUM(quantityOrdered * priceEach) AS orderTotal FROM orderDetails ORDER BY orderTotal desc;
+SELECT AVG(quantityOrdered * priceEach) AS orderAverage FROM orderDetails ORDER BY orderAverage desc;
+-- Aggregate functions are things like SUM AVG, etc. That grab a bunch of rows and melt them into one thing
+-- You cannot grab other columns
+SELECT AVG(quantityOrdered * priceEach),orderNumber AS orderAverage FROM orderDetails ORDER BY orderAverage desc;
+
+
+
+-- --------------SQL problem queries------------------
+-- Get all rows from Employees who are sales reps
+SELECT * FROM employees WHERE jobTitle = 'Sales Rep';
+-- Get all rows who aren't sales reb in office 1. Return only name and email
+SELECT firstName, lastName, email FROM employees WHERE jobTitle !='Sales Rep' AND officeCode = '1';
+-- Get a unique list of managers by pulling the reports to
+SELECT * FROM employees WHERE reportsTo = '1056';
+SELECT DISTINCT(reportsTo) FROM employees;
+
+-- Get the name and office code of everyone who's name contains a "b"
+SELECT firstName, lastName, officeCode FROM employees WHERE firstName LIKE '%b%' OR lastName LIKE '%b%';
+-- where the office code is 1, 3, or 5
+SELECT firstName, lastName, officeCode FROM employees WHERE officeCode IN (1,3,5);
+SELECT firstName, lastName, officeCode FROM employees WHERE (firstName LIKE '%b%' OR lastName LIKE '%b%') AND officeCode IN (1,3,5);
+
+-- only managers
+SELECT firstName, lastName, officeCode FROM employees WHERE jobTitle LIKE '%manager%';
+
+-- Pull the first 10 rows by customer name from customers
+SELECT * FROM customers ORDER BY customerName limit 0,10;
+-- only bring back name
+SELECT customerName FROM customers ORDER BY customerName limit 10;
+-- Bring back all payments and the associated customer data
+SELECT * FROM payments;
+-- JOIN allows us to bring two tables together
+-- JOIN makes tables WIDER
+-- UNION makes tables TALLER.
+-- limit results to those with an amount above 1000
+SELECT payments.amount, customers.customerName, customers.salesRepEmployeeNumber FROM customers 
+	JOIN payments ON payments.customerNumber = customers.customerNumber
+WHERE amount > 1000 ORDER BY amount asc;
+
+-- Get payments above 1K, with employee sales rep name
+SELECT payments.amount, customers.customerName, employees.firstName, employees.lastName FROM payments 
+	INNER JOIN customers ON customers.customerNumber = payments.customerNumber
+	INNER JOIN employees ON customers.salesRepEmployeeNumber = employees.employeeNumber;
+
+-- Get the total of all order amounts where the customer number is 124(and round)
+SELECT SUM(amount) FROM payments WHERE customerNumber = 124;
+
+
+-- SELECT employeeNumber as en FROM employees;
+
+
+SELECT * FROM employees
+	RIGHT JOIN customers ON employees.employeeNumber = customers.salesRepEmployeeNumber;
