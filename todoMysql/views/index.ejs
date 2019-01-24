@@ -26,6 +26,35 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table">
+                <tr>
+                    <th>Task Name</th>
+                    <th>Task Due Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            <% for(let i = 0; i<taskArray.length; i++) { %>
+                <tr>
+                    <td><%= taskArray[i].taskName %></td>
+                    <td><%= taskArray[i].taskDate %></td>
+                    <td>
+                        <a href="/edit/<%= taskArray[i].id %>">
+                            <button class="btn btn-warning">Edit</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/delete/<%= taskArray[i].id %>">
+                            <button class="btn btn-danger">Delete</button>
+                        </a>
+                    </td> 
+                </tr>
+            <% } %>
+            </table>
+        </div>
+    </div>
   
   </body>
 </html>
