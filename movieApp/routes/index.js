@@ -1,10 +1,16 @@
 var express = require('express');
 var router = express.Router();
+
+const mysql = require('mysql');
+const config = require('../config');
+const connection = mysql.createConnection(config.db);
+connection.connect();
+
 // Our node module, it's in gitignore
-const apiKey = require('../config');
+// const apiKey = require('../config');
 const apiBaseUrl = 'http://api.themoviedb.org/3';
 const imageBaseUrl = 'http://image.tmdb.org/t/p/w300';
-const nowPlayingUrl = `${apiBaseUrl}/movie/now_playing?api_key=${apiKey}`;
+const nowPlayingUrl = `${apiBaseUrl}/movie/now_playing?api_key=${config.apiKey}`;
 // console.log(nowPlayingUrl)
 
 // HOW we would do it in front-end
@@ -55,5 +61,16 @@ router.post('/search/movie',(req,res)=>{
     });
   })
 });
+
+router.get('/login', (req,res)=>{
+  res.render('login');
+})
+
+router.post('/loginProcess',(req,res)=>{
+  const insertQuery = `INSERT into users(email,password)
+    VALUES
+    (?,?);`
+  res.json(req.body);
+})
 
 module.exports = router;
