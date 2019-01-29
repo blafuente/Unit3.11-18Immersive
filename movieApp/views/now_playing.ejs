@@ -11,9 +11,9 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <% include navbar %>
+                <% include navbar %>  <!-- means I want a view file  -->
                 <% include search %>
-                <h1>Your ip is<%= ip %></h1>
+                <h1>Your ip is<%= ip %></h1> <!-- = means 'print'-->
                 <% parsedData.forEach((movie)=>{ %>
                     <div class="col-sm-3">
                         <img src="<%= imageBaseUrl + movie.poster_path%>" />
