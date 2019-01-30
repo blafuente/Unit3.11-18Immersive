@@ -1,4 +1,6 @@
 // First, well, this is an Express app, Maybe we should 
+const fs = require('fs');
+
 // get ... Express
 const express = require('express');
 // Make an express app 
@@ -12,6 +14,9 @@ const config = require('./config');
 // app.use means, add some middleware 
 // middleware = any function that has access to req and res 
 app.use(helmet());
+
+const multer = require('multer');
+const upload = multer({ dest: 'public/' })
 
 
 const sessionOptions = ({
@@ -93,7 +98,8 @@ app.get('/',(req,res,next)=>{
                 //user has voted on all animals
                 res.render('index',{
                     animal: null,
-                    msg: `You have voted on all the animals! Please upload a new one, or check out the <a href="/standings">standtings</a> page!`
+                    msg: `You have voted on all the animals! Please upload a new one, 
+                    or check out the <a href="/standings">standtings</a> page!`
                 });
             }else{
                 const rand = Math.floor(Math.random() * results.length);
@@ -227,6 +233,17 @@ app.get('/logout',(req, res, next)=>{
     // delete all session varibles for this user
     req.session.destroy();
     res.redirect('/login?msg=loggedOut')
+})
+
+app.get('/uploadAnimal',(req,res)=>{
+    // upload an animal image
+    res.render('upload',{});
+})
+
+app.post('/formSubmit',upload.single('imageToUpload'),(req, res)=>{
+    // get the anime name from req.body
+    // get the image form...???
+    res.json(req.file);
 })
 
 console.log("App is listening on port 8282")
